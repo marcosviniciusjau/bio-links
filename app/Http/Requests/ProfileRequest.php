@@ -2,16 +2,18 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\CheckHandler;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class UpdateLinkRequest extends FormRequest
+class ProfileRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('link'));
+        return true;
     }
 
     /**
@@ -22,8 +24,14 @@ class UpdateLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'link' => ['required', 'url'],
-            'name' => ['required', 'min:3'],
+            'name' => ['required', 'min:3', 'max:30'],
+            'description' => ['nullable'],
+            'photo' => ['nullable', 'image'],
+            'handler' => [
+                'required',
+                Rule::unique('users', 'handler')->ignore($this->user()->id),
+                new CheckHandler,
+            ],
         ];
     }
 }

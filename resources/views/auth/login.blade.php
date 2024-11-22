@@ -1,7 +1,5 @@
 <div>
-    
-{{auth()->id()}}
-    <h1>login</h1>
+    <h1>Login</h1>
 
     @if($message = session()->get('message'))
     <div>{{ $message }}</div>
@@ -9,15 +7,20 @@
 
    <form action="{{ route('login') }}" method="post">
     @csrf
-    <input type="text" name="email" placeholder="email"/>
-
-    @error('email')
-    <span>{{ $message }}</span>
-    @enderror
-    <input type="password" name="password" placeholder="password"/>
-    @error('password')
-    <span>{{ $message }}</span>
-    @enderror
+        <div>
+            <input type="text" name="email" placeholder="email" value="{{ old('email') }}"/>
+            @error('email')
+            <span>{{ $message }}</span>
+            @enderror
+        </div>
+        
+        <div>  
+            <input type="password" name="password" placeholder="password"/>
+            @error('password')
+            <span>{{ $message }}</span>
+            @enderror
+        </div>
+  
     <button type="submit">login</button>
    </form>
 </div>
