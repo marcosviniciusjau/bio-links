@@ -1,41 +1,22 @@
-<div>
-    <h1>Profile</h1>
+<x-layout.app>
+    <x-container>
+        <x-card title="Profile">
+            <x-form :route="route('profile')" put id="form" enctype="multipart/form-data">
+                <div class="flex gap-2 items-center">
+                    <x-img src="/storage/{{$user->photo}}" alt="{{$user->name}}"></x-img>
+                    <x-file-input name="photo"/>
+                </div>
 
-    @if (session('message'))
-        <div>{{ session('message') }}</div>
-    @endif
-
-   <form action="{{ route('profile') }}" method="post" enctype="multipart/form-data">
-    @csrf
-    @method('PUT')
-
-    <div>
-        <img src="/storage/{{$user->photo}}" alt="{{$user->name}}">
-        <input type="file" name="photo"/>
-    </div>
-    <div>
-        <input type="text" name="name" placeholder="Nome" value="{{ old('name',$user->name) }}"/>
-        @error('name')
-        <span>{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div>
-        <textarea name="description" placeholder="Resumo">{{ old('description',$user->description) }}</textarea>
-        @error('description')
-        <span>{{ $message }}</span>
-        @enderror
-    </div>
-
-    <div>
-        <span>biolinks.com.br/</span>
-        <input type="text" name="handler" placeholder="@seulink" value="{{ old('handler',$user->handler) }}"></input>
-        @error('handler')
-        <span>{{ $message }}</span>
-        @enderror
-    </div>
-   
-    <a href="{{route('dashboard')}}">Cancelar</a>
-    <button type="submit">Update</button>
-   </form>
-</div>
+                <x-input name="name" placeholder="name" value="{{ old('name', $user->name) }}"/>
+                <x-textarea name="description" value="{{ old('description', $user->description) }}"/>
+                <x-textarea name="handler" value="{{ old('handler', $user->handler) }}"/>
+               <x-input name="handler" prefix="biolinks.com.br/" placeholder="handler" value="{{ old('handler', $user->handler) }}"/>
+                
+            </x-form>
+            <x-slot:actions>
+                <x-a :href="route('dashboard')">Cancel</x-a>
+                <x-button type="submit" form="form">Update link</x-button>
+            </x-slot>
+        </x-card>
+    </x-container>
+</x-layout.app>

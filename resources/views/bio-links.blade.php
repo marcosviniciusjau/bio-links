@@ -1,5 +1,6 @@
+<x-layout.app>
 <div>
-    <img src="/storage/{{$user->photo}}" alt="{{$user->name}}">
+    <x-img src="/storage/{{$user->photo}}" alt="{{$user->name}}"/>
     <h2>User {{$user->name}} :: {{$user->id}}</h2>
     <h3>{{$user->description}}</h3>
     <ul>
@@ -14,3 +15,4 @@
         @endforeach
     </ul>
 </div>
+</x-layout.app>
